@@ -15,6 +15,9 @@ public class Debt {
     private double averageDailyBalance;
     private double minPayment;
     private double intrestIncurred;
+    private double invoiceInterest;
+    private double invoidePayment;
+
     protected LocalDate payoffDate;     //this is protected due to child class needing to set this in its constructor
 
     private final int NUM_ANNUAL_INTEREST_DAYS = 365;
@@ -110,26 +113,45 @@ public class Debt {
         this.dailyInterestRate = dailyInterestRate;
     }
 
+    private double getInvoiceInterest() {
+        return invoiceInterest;
+    }
+
+    private void setInvoiceInterest(double invoiceInterest) {
+        this.invoiceInterest = invoiceInterest;
+    }
+
+    private double getInvoidePayment() {
+        return invoidePayment;
+    }
+
+    private void setInvoidePayment(double invoidePayment) {
+        this.invoidePayment = invoidePayment;
+    }
+
     /*
-        Methods Section
-         */
+            Methods Section
+             */
     public boolean isPaid(){
         return this.getAmount() <= 0;
     }
 
     public void makePayment(double paymentAmount){
         setAmount(getAmount() - paymentAmount);
+        setInvoidePayment(getInvoidePayment()+paymentAmount);
+        System.out.printf("A payment of $%.2f was made to %s. Balance Remaining: $%.2f%n",paymentAmount,this.getName(), this.getAmount());
         if(this.getAmount() <= 0.0){
-            System.out.println(this.getName() + " has been paid off.");
+            System.out.println(this.getName() + " has been paid in full...!");
         }
     }
 
     public void compoundInterest(int days){
-        //using getAmount() in the interest calculation since the application doesn't forcast varing amounts on accounts, such as additional charges or off cycle payments
-        //that could impact the daily balance.  If those features are introduced the interest calculation below is the hook for that functionality
-        double interest = getAmount() * getDailyInterestRate() * days / 100;
-        addInterestIncurred(interest);
-        setAmount(getAmount() + interest);
+        //using getAmount() in the interest calculation since the application doesn't forecast varying amounts on accounts,
+        // such as additional charges or off cycle payments that could impact the daily balance.  If those features are
+        // introduced the interest calculation below is the hook for that functionality
+        this.setInvoiceInterest(getAmount() * getDailyInterestRate() * days / 100);
+        addInterestIncurred(this.getInvoiceInterest());
+        setAmount(getAmount() + this.getInvoiceInterest());
     }
 
     public void calculateDailyPercentageRate(){
@@ -147,11 +169,23 @@ public class Debt {
     public void reconcileMonth(double payment, int daysInMonth){
         compoundInterest(daysInMonth);
         makePayment(payment);
-        calculatePayoffDate();
+        //calculatePayoffDate();
     }
 
     public void calculatePayoffDate() {
         System.out.println("Debt.calculatePayoffDate() is not built yet");
+    }
+
+    public String getinvoice(){
+        String invoice = String.format("Account %s :: Interest incurred = $%.2f    A payment of $%.2f was made leaving a balance of %.2f %n ",
+                    this.getName(), this.getInvoiceInterest(), this.getInvoidePayment(), this.getAmount());
+
+        if(this.getAmount() <= 0.0){
+            invoice.concat(this.getName() + " has been PAID IN FULL...");
+        }
+        this.setInvoidePayment(0.0);
+        this.setInvoiceInterest(0.0);
+        return invoice;
     }
 
 }
