@@ -9,9 +9,30 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 /**
- * Created by Jody_Admin on 11/4/2016.
+ * Payoff Analyzer
+ * CSC 318 Final Project
+ * Jody  Caudill  -  https://github.com/ElderAbyss/PayoffAnalyzer
+ *
+ * Copyright (c) 2016 Jody Caudill
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the “Software”), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
  */
+
 public class PayoffScheduleTest {
+    /**
+     * test adding debt to end of list in schedule
+     * @throws Exception
+     */
     @Test
     public void addDebtToList() throws Exception {
         Debt testDebt = new Debt("test",1000.00,10,80);
@@ -23,6 +44,10 @@ public class PayoffScheduleTest {
         Assert.assertTrue(temp.getName().equals(testDebt.getName()));
     }
 
+    /**
+     * test adding debt to given index in list of schedule
+     * @throws Exception
+     */
     @Test
     public void addDebtToList1() throws Exception {
         Debt testDebt1 = new Debt("test1",1000.00,10,80);
@@ -40,6 +65,10 @@ public class PayoffScheduleTest {
         Assert.assertTrue(testSchedule.getDebtList().get(2).getName().equals(testDebt2.getName()));
     }
 
+    /**
+     * test removing debt from list in schedule
+     * @throws Exception
+     */
     @Test
     public void removeDebtFromList() throws Exception {
         Debt testDebt1 = new Debt("test1",1000.00,10,80);
@@ -57,6 +86,10 @@ public class PayoffScheduleTest {
         Assert.assertTrue(testSchedule.getDebtList().get(1).getName().equals(testDebt3.getName()));
     }
 
+    /**
+     * test setting the sequence directly in the list
+     * @throws Exception
+     */
     @Test
     public void setDebtSequence() throws Exception {
         Debt testDebt1 = new Debt("test1",1000.00,10,80);
@@ -79,6 +112,10 @@ public class PayoffScheduleTest {
         Assert.assertTrue(testSchedule.getDebtList().get(2).getName().equals(testDebt1.getName()));
     }
 
+    /**
+     * test forward and revers sequencing of debt list by debt amount
+     * @throws Exception
+     */
     @Test
     public void sequenceDebtListByAmount() throws Exception {
         Debt testDebt1 = new Debt("test1",1000.00,10,80);
@@ -101,6 +138,10 @@ public class PayoffScheduleTest {
         Assert.assertTrue(testSchedule.getDebtList().get(2).getName().equals(testDebt3.getName()));
     }
 
+    /**
+     * test forward and revers sequencing of debt list by debt interest rate
+     * @throws Exception
+     */
     @Test
     public void sequenceDebtListByInterestRate() throws Exception {
         Debt testDebt1 = new Debt("test1",1000.00,10,80);
@@ -123,6 +164,10 @@ public class PayoffScheduleTest {
         Assert.assertTrue(testSchedule.getDebtList().get(2).getName().equals(testDebt2.getName()));
     }
 
+    /**
+     * test the schedule calcuations for debt list
+     * @throws Exception
+     */
     @Test
     public void calculateSchedule() throws Exception {
         Debt testDebt1 = new Debt("test1",1000.00,10,80);

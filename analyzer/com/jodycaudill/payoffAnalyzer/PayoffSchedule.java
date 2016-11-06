@@ -5,8 +5,25 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by Jody_Admin on 10/30/2016.
+ * Payoff Analyzer
+ * CSC 318 Final Project
+ * Jody  Caudill  -  https://github.com/ElderAbyss/PayoffAnalyzer
+ *
+ * Copyright (c) 2016 Jody Caudill
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the “Software”), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
  */
+
 public class PayoffSchedule {
     private String name;
     private String description;
@@ -167,12 +184,19 @@ public class PayoffSchedule {
 
     public void saveSchedule() {
         System.out.println("PayoffSchedule.saveSchedule() is not built yet");
+        //// TODO: 11/6/2016
     }
 
     public void loadSchedule() {
         System.out.println("PayoffSchedule.loadSchedule() is not built yet");
+        //// TODO: 11/6/2016
     }
 
+    /**
+     * Primary function of calculating the debt payoff schedule by processing payments and supplying
+     * date management for interests of time of schedule and collects the account invoices to build the
+     * schedule for payoff with results.
+     */
     public void calculateSchedule() {
         double thisMonthsBudget;
         while (!debtIsPaid()) {
@@ -184,6 +208,10 @@ public class PayoffSchedule {
         printSchedule();
     }
 
+    /**
+     * During schedule calculation this method collects the invoices and will
+     * Age the schedule by one month
+     */
     private void ageSchedule() {
         String invoice = this.getDebtList().stream()
                 .map(x -> x.getinvoice())
@@ -194,6 +222,12 @@ public class PayoffSchedule {
         }
     }
 
+    /**
+     * Pay the blanace of the budget after all minums have been paid to the highest priority debt
+     * If any is left after paying the highest debt off then move the budget balance into a recursive call
+     * to pay the balance on the next highest priority debt
+     * @param thisMonthsBuget budget balance to make payments with
+     */
     private void payBudgetBalanceOnHighestPriorityUnpaidDebt(double thisMonthsBuget) {
         ScheduledDebt priorityDebt = null;
         ScheduledDebt currentDebt;
@@ -218,6 +252,12 @@ public class PayoffSchedule {
         }
     }
 
+    /**
+     * Pay the minimum month payment on each of the debt belonging to the schedule that are not
+     * already paided off
+     * @param thisMonthsBudget amount of monthly budget to work with making payments
+     * @return balance of the monthly budget after all minimum payments have been made
+     */
     private double payMinPaymentOnUnpaidDebts(double thisMonthsBudget) {
         double payment;
         ScheduledDebt currentDebt;
@@ -235,6 +275,10 @@ public class PayoffSchedule {
         return thisMonthsBudget;
     }
 
+    /**
+     * predicate to determine if all the debts belonging to the schedule are paid in full
+     * @return
+     */
     private boolean debtIsPaid() {
         ListIterator<ScheduledDebt> debtItr = this.debtList.listIterator();
         while (debtItr.hasNext()) {
