@@ -130,8 +130,8 @@ public class Debt {
     }
 
     /*
-            Methods Section
-             */
+    Methods Section
+     */
     public boolean isPaid(){
         return this.getAmount() <= 0;
     }
@@ -139,10 +139,6 @@ public class Debt {
     public void makePayment(double paymentAmount){
         setAmount(getAmount() - paymentAmount);
         setInvoidePayment(getInvoidePayment()+paymentAmount);
-        System.out.printf("A payment of $%.2f was made to %s. Balance Remaining: $%.2f%n",paymentAmount,this.getName(), this.getAmount());
-        if(this.getAmount() <= 0.0){
-            System.out.println(this.getName() + " has been paid in full...!");
-        }
     }
 
     public void compoundInterest(int days){
@@ -177,14 +173,16 @@ public class Debt {
     }
 
     public String getinvoice(){
-        String invoice = String.format("Account %s :: Interest incurred = $%.2f    A payment of $%.2f was made leaving a balance of %.2f %n ",
+        String invoice = "";
+        if(this.getAmount() > 0.0 || this.getInvoidePayment() > 0.0){
+            invoice = String.format("Account %s :: Interest incurred = $%.2f    A payment of $%.2f was made leaving a balance of %.2f %n",
                     this.getName(), this.getInvoiceInterest(), this.getInvoidePayment(), this.getAmount());
-
-        if(this.getAmount() <= 0.0){
-            invoice.concat(this.getName() + " has been PAID IN FULL...");
+            if(this.getAmount() <= 0.0){
+               invoice = invoice.concat(this.getName() + " has been PAID IN FULL...\n");
+            }
+            this.setInvoidePayment(0.0);
+            this.setInvoiceInterest(0.0);
         }
-        this.setInvoidePayment(0.0);
-        this.setInvoiceInterest(0.0);
         return invoice;
     }
 

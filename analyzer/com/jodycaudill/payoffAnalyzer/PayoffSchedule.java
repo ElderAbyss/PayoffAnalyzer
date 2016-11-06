@@ -2,6 +2,7 @@ package analyzer.com.jodycaudill.payoffAnalyzer;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Jody_Admin on 10/30/2016.
@@ -14,12 +15,14 @@ public class PayoffSchedule {
     private double totalInterestPaid;
     private double totalCost;
     private LocalDate payoffDate;
+    private HashMap<LocalDate, String> scheduleInvoices;
 
     /*
     Constructor section
      */
     public PayoffSchedule() {
         this.debtList = new LinkedList<>();
+        this.scheduleInvoices = new HashMap<>();
         this.payoffDate = LocalDate.now();
     }
 
@@ -178,12 +181,17 @@ public class PayoffSchedule {
             payBudgetBalanceOnHighestPriorityUnpaidDebt(thisMonthsBudget);
             ageSchedule();
         }
-
+        printSchedule();
     }
 
     private void ageSchedule() {
-        setPayoffDate(getPayoffDate().plusMonths(1));
-        System.out.println(this.getPayoffDate());
+        String invoice = this.getDebtList().stream()
+                .map(x -> x.getinvoice())
+                .collect(Collectors.joining());
+        scheduleInvoices.put(this.getPayoffDate(),invoice);
+        if(!this.debtIsPaid()) {
+            setPayoffDate(getPayoffDate().plusMonths(1));
+        }
     }
 
     private void payBudgetBalanceOnHighestPriorityUnpaidDebt(double thisMonthsBuget) {
@@ -235,6 +243,13 @@ public class PayoffSchedule {
             }
         }
         return true;
+    }
+
+    public void printSchedule(){
+        for (LocalDate date: this.scheduleInvoices.keySet()){
+            System.out.println(date.toString());
+            System.out.println(this.scheduleInvoices.get(date));
+        }
     }
 
 }

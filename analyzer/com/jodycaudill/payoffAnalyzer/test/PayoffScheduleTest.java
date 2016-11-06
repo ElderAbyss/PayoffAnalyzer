@@ -139,7 +139,7 @@ public class PayoffScheduleTest {
 
         testSchedule.calculateSchedule();
 
-        Assert.assertTrue(testSchedule.getPayoffDate().equals(LocalDate.now().plusMonths(5)));
+        Assert.assertTrue(testSchedule.getPayoffDate().equals(LocalDate.now().plusMonths(4)));
         Assert.assertTrue(testSchedule.getDebtList().get(0).isPaid());
         Assert.assertTrue(testSchedule.getDebtList().get(1).isPaid());
         Assert.assertTrue(testSchedule.getDebtList().get(2).isPaid());
