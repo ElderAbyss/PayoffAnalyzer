@@ -7,8 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="analyzer.Controller">
    <children>
       <VBox>
          <children>
@@ -33,7 +32,10 @@
             </MenuBar>
             <HBox spacing="10.0">
                <children>
-                  <Region HBox.hgrow="ALWAYS" />
+                  <Region HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Region>
                   <Label text="Payoff Analyzer" />
                   <Region HBox.hgrow="ALWAYS" />
                </children>
@@ -43,13 +45,13 @@
             </HBox>
          </children>
       </VBox>
-      <TabPane prefHeight="200.0" prefWidth="200.0" side="LEFT" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+      <TabPane side="LEFT" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
           <Tab text="Debts">
             <content>
               <AnchorPane>
                      <children>
-                        <VBox fillWidth="false" prefHeight="541.0" prefWidth="871.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox fillWidth="false" prefHeight="529.0" prefWidth="871.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane>
                                  <children>
@@ -61,32 +63,95 @@
                                                 <Label layoutX="10.0" layoutY="10.0" text="These are the individual debt items you owe" />
                                              </children>
                                           </VBox>
-                                          <Region HBox.hgrow="ALWAYS" />
-                                          <Button mnemonicParsing="false" text="Add">
+                                          <GridPane alignment="TOP_CENTER" hgap="4.0" vgap="10.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="130.0" minWidth="10.0" prefWidth="123.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="77.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Button fx:id="debtAddButton" mnemonicParsing="false" onAction="#addDebtItemClicked" text="Add" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                   <padding>
+                                                      <Insets bottom="2.0" left="14.0" right="14.0" top="2.0" />
+                                                   </padding>
+                                                </Button>
+                                                <Hyperlink onAction="#removeSelectedDebtItemClicked" text="Remove Selected" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label text="Name:">
+                                                   <GridPane.margin>
+                                                      <Insets right="8.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label layoutX="75.0" layoutY="12.0" text="Balance:" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets right="8.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label layoutX="75.0" layoutY="12.0" text="Interest:" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets right="8.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label layoutX="75.0" layoutY="12.0" text="Minimum Payment:" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets right="8.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <TextField fx:id="debtNameTextField" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="2.0" left="8.0" top="2.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="debtBalanceTextField" layoutX="145.0" layoutY="7.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets left="8.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="debtInterestTextField" layoutX="145.0" layoutY="7.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets left="8.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <TextField fx:id="debtPaymentTextField" layoutX="10.0" layoutY="7.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets left="8.0" />
+                                                   </GridPane.margin>
+                                                </TextField>
+                                                <Label layoutX="22.0" layoutY="96.0" text="\%" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                                             </children>
                                              <HBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                <Insets right="20.0" />
                                              </HBox.margin>
-                                             <padding>
-                                                <Insets bottom="2.0" left="14.0" right="14.0" top="2.0" />
-                                             </padding>
-                                          </Button>
-                                          <Hyperlink text="Remove">
-                                             <HBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                             </HBox.margin>
-                                          </Hyperlink>
+                                          </GridPane>
                                        </children>
                                        <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                          <Insets bottom="4.0" left="10.0" right="10.0" top="4.0" />
                                        </padding>
                                     </HBox>
                                  </children>
                               </AnchorPane>
                               <AnchorPane VBox.vgrow="ALWAYS">
                                  <children>
-                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="414.0" prefWidth="830.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="373.0" prefWidth="830.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                        <AnchorPane>
+                                             <children>
+                                                <TableView fx:id="debtTable" prefHeight="400.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="debtNameColumn" maxWidth="512.0" minWidth="80.0" prefWidth="460.0" text="Name" />
+                                                    <TableColumn fx:id="debtAmountColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="150.0" text="Amount" />
+                                                      <TableColumn fx:id="debtInterestColumn" maxWidth="1.7976931348623157E308" minWidth="30.0" prefWidth="75.0" text="APR" />
+                                                      <TableColumn fx:id="debtPaymentColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="110.0" text="Min. Payment" />
+                                                  </columns>
+                                                </TableView>
+                                             </children></AnchorPane>
                                       </content>
                                        <padding>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -173,7 +238,7 @@
                                                       </VBox>
                                                       <VBox alignment="TOP_CENTER" spacing="10.0">
                                                          <children>
-                                                            <TextField alignment="CENTER_RIGHT" promptText="\$0" />
+                                                            <TextField fx:id="monthlyPaydownTextField" alignment="CENTER_RIGHT" promptText="\$0" />
                                                             <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calculate" />
                                                          </children>
                                                       </VBox>
@@ -234,9 +299,6 @@
          <VBox.margin>
             <Insets bottom="10.0" top="10.0" />
          </VBox.margin>
-         <padding>
-            <Insets bottom="10.0" top="10.0" />
-         </padding>
       </TabPane>
       <HBox>
          <children>

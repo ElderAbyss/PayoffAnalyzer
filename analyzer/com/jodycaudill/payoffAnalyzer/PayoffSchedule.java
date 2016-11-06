@@ -199,6 +199,7 @@ public class PayoffSchedule {
      */
     public void calculateSchedule() {
         double thisMonthsBudget;
+        resetScheduleForRecalculation();
         while (!debtIsPaid()) {
             thisMonthsBudget = this.getMonthlyPayoffBudget();
             thisMonthsBudget = payMinPaymentOnUnpaidDebts(thisMonthsBudget);
@@ -206,6 +207,19 @@ public class PayoffSchedule {
             ageSchedule();
         }
         printSchedule();
+    }
+
+    /**
+     * re-initializes objects to prepare for a schedule calculation
+     * reset date to current month, clear the exisitn invoice schedule for payments
+     * and reset all the debts to original status
+     */
+    private void resetScheduleForRecalculation() {
+        this.setPayoffDate( LocalDate.now());
+        this.scheduleInvoices.clear();
+        for(Debt debt : getDebtList()){
+            debt.setAmount(debt.getInitialAmount());
+        }
     }
 
     /**

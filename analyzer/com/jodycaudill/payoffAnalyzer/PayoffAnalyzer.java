@@ -32,6 +32,8 @@ public class PayoffAnalyzer {
     Constructor section
      */
     public PayoffAnalyzer() {
+        debts = new LinkedList<>();
+        currentSchedule = new PayoffSchedule();
     }
 
     /*
@@ -72,6 +74,7 @@ public class PayoffAnalyzer {
     }
 
     public void removeDebt(int index){
+
         currentSchedule.removeDebtFromList(debts.remove(index));
         updateAndSave();
     }
