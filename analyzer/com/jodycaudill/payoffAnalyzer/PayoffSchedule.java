@@ -213,7 +213,7 @@ public class PayoffSchedule {
             payBudgetBalanceOnHighestPriorityUnpaidDebt(thisMonthsBudget);
             ageSchedule();
         }
-        printSchedule();        //// TODO: 11/6/2016  remove this or comment out.. for debugging only
+        //printSchedule();        //// TODO: 11/6/2016  remove this or comment out.. for debugging only
     }
 
     /**

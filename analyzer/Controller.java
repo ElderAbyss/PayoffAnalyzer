@@ -3,6 +3,7 @@ package analyzer;
 import analyzer.com.jodycaudill.payoffAnalyzer.Debt;
 import analyzer.com.jodycaudill.payoffAnalyzer.PayoffAnalyzer;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -74,6 +75,9 @@ public class Controller implements Initializable {
         debtInterestColumn.setCellValueFactory(new PropertyValueFactory<>("annualPercentageRate"));
         debtPaymentColumn.setCellValueFactory(new PropertyValueFactory<>("minPayment"));
         //updateDebtTab();
+       // debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> sortDebts());
+
+
     }
 
     /**
@@ -110,6 +114,11 @@ public class Controller implements Initializable {
        updateGUI();
     }
 
+    public void sortDebts(){
+        analyzer.setDebts(debtTable.getItems());
+        updateScheduleTab();
+    }
+
     /**
      * Controller methods
      */
@@ -133,10 +142,13 @@ public class Controller implements Initializable {
         ObservableList<Debt> currentDebts = FXCollections.observableArrayList();
         if(analyzer.getDebts().size() > 0) {
             currentDebts.addAll(analyzer.getDebts());
+            //debtTable.getItems().clear();
+           // debtTable.getItems().addAll(currentDebts);
             debtTable.setItems(currentDebts);
         }else{
             debtTable.getItems().clear();
         }
+        debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> sortDebts());
     }
 
     public void updateDebtListSequence(){

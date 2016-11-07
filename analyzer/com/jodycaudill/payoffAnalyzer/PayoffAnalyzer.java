@@ -92,8 +92,8 @@ public class PayoffAnalyzer {
 
     private void updateAndSave() {
         currentSchedule.calculateSchedule();
-        saveDebts();
-        saveSchedule();
+        //saveDebts();
+        //saveSchedule();
     }
 
     public void createNewPayoffSchedule(){
