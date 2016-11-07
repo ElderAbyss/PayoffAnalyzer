@@ -2,7 +2,6 @@ package analyzer.com.jodycaudill.payoffAnalyzer.test;
 
 import analyzer.com.jodycaudill.payoffAnalyzer.Debt;
 import analyzer.com.jodycaudill.payoffAnalyzer.PayoffSchedule;
-import analyzer.com.jodycaudill.payoffAnalyzer.ScheduledDebt;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -39,7 +38,7 @@ public class PayoffScheduleTest {
         PayoffSchedule testSchedule = new PayoffSchedule();
         testSchedule.addDebtToList(testDebt);
 
-        ScheduledDebt temp = testSchedule.getDebtList().stream().filter(d -> d.getName().equals(testDebt.getName())).findFirst().orElse(null);
+        Debt temp = testSchedule.getDebtList().stream().filter(d -> d.getName().equals(testDebt.getName())).findFirst().orElse(null);
         Assert.assertTrue(temp != null);
         Assert.assertTrue(temp.getName().equals(testDebt.getName()));
     }

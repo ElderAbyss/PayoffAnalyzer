@@ -1,6 +1,9 @@
 package analyzer.com.jodycaudill.payoffAnalyzer;
 
-import java.util.LinkedList;
+import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * Payoff Analyzer
@@ -24,7 +27,6 @@ import java.util.LinkedList;
 
 public class PayoffAnalyzer {
     private String userName;
-    private LinkedList<Debt> debts;
     private PayoffSchedule currentSchedule;
     private final String CURRENT_SCHEDULE_NAME = "Payoff_Schedule.dat";
 
@@ -32,7 +34,6 @@ public class PayoffAnalyzer {
     Constructor section
      */
     public PayoffAnalyzer() {
-        debts = new LinkedList<>();
         currentSchedule = new PayoffSchedule();
     }
 
@@ -47,12 +48,17 @@ public class PayoffAnalyzer {
         this.userName = userName;
     }
 
-    public LinkedList<Debt> getDebts() {
-        return debts;
+    public ArrayList<Debt> getDebts() {
+        return this.getCurrentSchedule().getDebtList();
     }
 
-    public void setDebts(LinkedList<Debt> debts) {
-        this.debts = debts;
+    public void setDebts(ObservableList<Debt> newList){
+        currentSchedule.getDebtList().clear();
+        ListIterator<Debt> listITR = newList.listIterator();
+        while(listITR.hasNext()){
+            Debt debt = listITR.next();
+            createNewDebt(debt);
+        }
     }
 
     public PayoffSchedule getCurrentSchedule() {
@@ -68,16 +74,21 @@ public class PayoffAnalyzer {
      */
     public void createNewDebt(String name, double initialAmount, double annualPercentageRate, double minPayment){
         Debt newDebt = new Debt(name,initialAmount,annualPercentageRate,minPayment);
-        debts.add(newDebt);
         currentSchedule.addDebtToList(newDebt);
         updateAndSave();
     }
 
-    public void removeDebt(int index){
-
-        currentSchedule.removeDebtFromList(debts.remove(index));
+    public void createNewDebt(Debt debt){
+        currentSchedule.addDebtToList(debt);
         updateAndSave();
     }
+
+    public void removeDebt(Debt debt){
+        currentSchedule.removeDebtFromList(debt);
+        updateAndSave();
+    }
+
+
 
     private void updateAndSave() {
         currentSchedule.calculateSchedule();
@@ -87,9 +98,6 @@ public class PayoffAnalyzer {
 
     public void createNewPayoffSchedule(){
        this.currentSchedule = new PayoffSchedule();
-        for (Debt debt: debts) {
-            this.currentSchedule.addDebtToList(debt);
-        }
     }
 
     public void saveDebts(){

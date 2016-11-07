@@ -28,7 +28,7 @@ public class PayoffSchedule {
     private String name;
     private String description;
     private double monthlyPayDownAmount;
-    private LinkedList<ScheduledDebt> debtList;
+    private ArrayList<Debt> debtList;
     private double totalInterestPaid;
     private double totalCost;
     private LocalDate payoffDate;
@@ -38,7 +38,7 @@ public class PayoffSchedule {
     Constructor section
      */
     public PayoffSchedule() {
-        this.debtList = new LinkedList<>();
+        this.debtList = new ArrayList<>();
         this.scheduleInvoices = new HashMap<>();
         this.payoffDate = LocalDate.now();
     }
@@ -73,7 +73,7 @@ public class PayoffSchedule {
 
     public double getMonthlyPayoffBudget() {
         double budget = this.monthlyPayDownAmount;
-        for (ScheduledDebt debt: this.debtList) {
+        for (Debt debt: this.debtList) {
             budget += debt.getMinPayment();
         }
         return budget;
@@ -81,17 +81,17 @@ public class PayoffSchedule {
 
     public double getMonthlyMinPayment() {
         double budget = 0.0;
-        for (ScheduledDebt debt: this.debtList) {
+        for (Debt debt: this.debtList) {
             budget += debt.getMinPayment();
         }
         return budget;
     }
 
-    public LinkedList<ScheduledDebt> getDebtList() {
+    public ArrayList<Debt> getDebtList() {
         return debtList;
     }
 
-    public void setDebtList(LinkedList<ScheduledDebt> debtList) {
+    public void setDebtList(ArrayList<Debt> debtList) {
         this.debtList = debtList;
     }
 
@@ -123,16 +123,15 @@ public class PayoffSchedule {
     Methods Section
      */
     public void addDebtToList(Debt debt) {
-        ScheduledDebt newDebt = new ScheduledDebt(debt.getName(), debt.getInitialAmount(), debt.getAnnualPercentageRate(), debt.getMinPayment(), this.debtList.size());
-        this.debtList.add(newDebt);
+        this.debtList.add(debt);
     }
 
-    public void addDebtToList(int sequence, ScheduledDebt debt) {
+    public void addDebtToList(int sequence, Debt debt) {
         this.debtList.add(sequence, debt);
     }
 
     public void removeDebtFromList(Debt debt) {
-        ScheduledDebt result = this.debtList.stream().filter(x -> x.getName().equals(debt.getName()))
+        Debt result = this.debtList.stream().filter(x -> x.getName().equals(debt.getName()))
                 .findFirst()
                 .orElse(null);
         if (result != null) {
@@ -150,9 +149,9 @@ public class PayoffSchedule {
     }
 
     public void sequenceDebtListByAmount() {
-        Collections.sort(this.debtList, new Comparator<ScheduledDebt>() {
+        Collections.sort(this.debtList, new Comparator<Debt>() {
             @Override
-            public int compare(ScheduledDebt o1, ScheduledDebt o2) {
+            public int compare(Debt o1, Debt o2) {
                 if (o1.getAmount() > o2.getAmount()) {
                     return 1;
                 } else if (o1.getAmount() < o2.getAmount()) {
@@ -170,9 +169,9 @@ public class PayoffSchedule {
     }
 
     public void sequenceDebtListByInterestRate() {
-        Collections.sort(this.debtList, new Comparator<ScheduledDebt>() {
+        Collections.sort(this.debtList, new Comparator<Debt>() {
             @Override
-            public int compare(ScheduledDebt o1, ScheduledDebt o2) {
+            public int compare(Debt o1, Debt o2) {
                 if (o1.getAnnualPercentageRate() > o2.getAnnualPercentageRate()) {
                     return 1;
                 } else if (o1.getAnnualPercentageRate() < o2.getAnnualPercentageRate()) {
@@ -253,15 +252,13 @@ public class PayoffSchedule {
      * @param thisMonthsBudget budget balance to make payments with
      */
     private void payBudgetBalanceOnHighestPriorityUnpaidDebt(double thisMonthsBudget) {
-        ScheduledDebt priorityDebt = null;
-        ScheduledDebt currentDebt;
-        ListIterator<ScheduledDebt> debtItr = this.debtList.listIterator();
+        Debt priorityDebt = null;
+        Debt currentDebt;
+        ListIterator<Debt> debtItr = this.debtList.listIterator();
         while (debtItr.hasNext()) {
             currentDebt = debtItr.next();
             if (!currentDebt.isPaid()) {
                 if (priorityDebt == null) {
-                    priorityDebt = currentDebt;
-                } else if (currentDebt.getSequence() < priorityDebt.getSequence()) {
                     priorityDebt = currentDebt;
                 }
             }
@@ -284,8 +281,8 @@ public class PayoffSchedule {
      */
     private double payMinPaymentOnUnpaidDebts(double thisMonthsBudget) {
         double payment;
-        ScheduledDebt currentDebt;
-        ListIterator<ScheduledDebt> debtItr = this.debtList.listIterator();
+        Debt currentDebt;
+        ListIterator<Debt> debtItr = this.debtList.listIterator();
         while (debtItr.hasNext()) {
             currentDebt = debtItr.next();
             if (!currentDebt.isPaid() && thisMonthsBudget > 0.0) {
@@ -304,7 +301,7 @@ public class PayoffSchedule {
      * @return
      */
     private boolean debtIsPaid() {
-        ListIterator<ScheduledDebt> debtItr = this.debtList.listIterator();
+        ListIterator<Debt> debtItr = this.debtList.listIterator();
         while (debtItr.hasNext()) {
             if (!debtItr.next().isPaid()) {
                 return false;
@@ -333,7 +330,7 @@ public class PayoffSchedule {
 
     public double getTotalScheduleInterest(){
         double interest = 0.0;
-        for( ScheduledDebt debt : this.getDebtList()){
+        for( Debt debt : this.getDebtList()){
             interest += debt.getIntrestIncurred();
         }
         return interest;
@@ -341,7 +338,7 @@ public class PayoffSchedule {
 
     public  double getTotalScheduleCost(){
         double cost = 0.0;
-        for (ScheduledDebt debt : this.getDebtList()){
+        for (Debt debt : this.getDebtList()){
             cost += debt.getCost();
         }
         return cost;

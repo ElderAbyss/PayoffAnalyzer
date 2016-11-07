@@ -97,8 +97,7 @@ public class Controller implements Initializable {
     }
 
     public void removeSelectedDebtItemClicked(){
-        int removeIndex = debtTable.getSelectionModel().getSelectedIndex();
-        analyzer.removeDebt(removeIndex);
+        analyzer.removeDebt(debtTable.getSelectionModel().getSelectedItem());
         updateGUI();
     }
 
@@ -140,6 +139,9 @@ public class Controller implements Initializable {
         }
     }
 
+    public void updateDebtListSequence(){
+        debtTable.getItems();
+    }
     /**
      *  Validator methods
      */
