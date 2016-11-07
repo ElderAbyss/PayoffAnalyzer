@@ -32,14 +32,14 @@ public class PayoffSchedule {
     private double totalInterestPaid;
     private double totalCost;
     private LocalDate payoffDate;
-    private HashMap<LocalDate, String> scheduleInvoices;
+    private LinkedHashMap<LocalDate, String> scheduleInvoices;
 
     /*
     Constructor section
      */
     public PayoffSchedule() {
         this.debtList = new ArrayList<>();
-        this.scheduleInvoices = new HashMap<>();
+        this.scheduleInvoices = new LinkedHashMap<>();
         this.payoffDate = LocalDate.now();
     }
 
