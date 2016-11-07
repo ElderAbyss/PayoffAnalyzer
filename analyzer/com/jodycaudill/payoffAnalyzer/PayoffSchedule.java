@@ -261,7 +261,7 @@ public class PayoffSchedule {
             if (!currentDebt.isPaid()) {
                 if (priorityDebt == null) {
                     priorityDebt = currentDebt;
-                } else if (currentDebt.getSequence() > priorityDebt.getSequence()) {
+                } else if (currentDebt.getSequence() < priorityDebt.getSequence()) {
                     priorityDebt = currentDebt;
                 }
             }
