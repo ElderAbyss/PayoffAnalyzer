@@ -5,10 +5,7 @@ import analyzer.com.jodycaudill.payoffAnalyzer.PayoffAnalyzer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
@@ -54,6 +51,14 @@ public class Controller implements Initializable {
     public TableColumn<Debt , Double> debtPaymentColumn;
 
     public TextField monthlyPaydownTextField;
+    public Button calculateButton;
+
+    public Label payoffDateLabel;
+    public Label interestLabel;
+    public Label costLabel;
+
+    public TextArea scheduleTextArea;
+
 
 
     @Override
@@ -68,6 +73,9 @@ public class Controller implements Initializable {
         //updateDebtTable();
     }
 
+    /**
+     * event handler methods
+     */
     public void addDebtItemClicked(){
 
         String name = debtNameTextField.getText();
@@ -90,6 +98,19 @@ public class Controller implements Initializable {
         analyzer.removeDebt(removeIndex);
         updateDebtTable();
     }
+
+    public void calculateButtonClicked(){
+        Double paydownBudget = validateDouble(monthlyPaydownTextField.getText(),"The Monthly Paydown Budget Amount is invalid.");
+        if(paydownBudget > 0.0){
+            analyzer.getCurrentSchedule().setMonthlyPayDownAmount(paydownBudget);
+        }
+        analyzer.getCurrentSchedule().calculateSchedule();
+        scheduleTextArea.setText(analyzer.getCurrentSchedule().getScheduleDetails());
+    }
+
+    /**
+     * Controller methods
+     */
 
     public void updateDebtTable(){
         ObservableList<Debt> currentDebts = FXCollections.observableArrayList();

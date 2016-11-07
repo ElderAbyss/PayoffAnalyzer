@@ -206,7 +206,7 @@ public class PayoffSchedule {
             payBudgetBalanceOnHighestPriorityUnpaidDebt(thisMonthsBudget);
             ageSchedule();
         }
-        printSchedule();
+        printSchedule();        //// TODO: 11/6/2016  remove this or comment out.. for debugging only
     }
 
     /**
@@ -237,12 +237,12 @@ public class PayoffSchedule {
     }
 
     /**
-     * Pay the blanace of the budget after all minums have been paid to the highest priority debt
+     * Pay the balance of the budget after all minums have been paid to the highest priority debt
      * If any is left after paying the highest debt off then move the budget balance into a recursive call
      * to pay the balance on the next highest priority debt
-     * @param thisMonthsBuget budget balance to make payments with
+     * @param thisMonthsBudget budget balance to make payments with
      */
-    private void payBudgetBalanceOnHighestPriorityUnpaidDebt(double thisMonthsBuget) {
+    private void payBudgetBalanceOnHighestPriorityUnpaidDebt(double thisMonthsBudget) {
         ScheduledDebt priorityDebt = null;
         ScheduledDebt currentDebt;
         ListIterator<ScheduledDebt> debtItr = this.debtList.listIterator();
@@ -257,11 +257,11 @@ public class PayoffSchedule {
             }
         }
         if (priorityDebt != null) {
-            double payment = Math.min(priorityDebt.getAmount(), thisMonthsBuget);
+            double payment = Math.min(priorityDebt.getAmount(), thisMonthsBudget);
             priorityDebt.makePayment(payment);
-            thisMonthsBuget -= payment;
-            if (thisMonthsBuget > 0.0) {
-                payBudgetBalanceOnHighestPriorityUnpaidDebt(thisMonthsBuget);
+            thisMonthsBudget -= payment;
+            if (thisMonthsBudget > 0.0) {
+                payBudgetBalanceOnHighestPriorityUnpaidDebt(thisMonthsBudget);
             }
         }
     }
@@ -301,6 +301,17 @@ public class PayoffSchedule {
             }
         }
         return true;
+    }
+
+    public String getScheduleDetails(){
+        StringBuilder details = new StringBuilder();
+        for (LocalDate date: this.scheduleInvoices.keySet()) {
+            details.append(date.toString());
+            details.append("\n");
+            details.append(this.scheduleInvoices.get(date));
+            details.append("********************\n");
+        }
+        return details.toString();
     }
 
     public void printSchedule(){

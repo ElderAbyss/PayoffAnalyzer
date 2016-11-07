@@ -239,7 +239,7 @@
                                                       <VBox alignment="TOP_CENTER" spacing="10.0">
                                                          <children>
                                                             <TextField fx:id="monthlyPaydownTextField" alignment="CENTER_RIGHT" promptText="\$0" />
-                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Calculate" />
+                                                            <Button fx:id="calculateButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#calculateButtonClicked" text="Calculate" />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -265,9 +265,9 @@
                                                       </VBox>
                                                       <VBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
                                                          <children>
-                                                            <Label text="mm/yyyy" />
-                                                            <Label text="\$444" />
-                                                            <Label text="\$9,999" />
+                                                            <Label fx:id="payoffDateLabel" text="mm/yyyy" />
+                                                            <Label fx:id="interestLabel" text="\$444" />
+                                                            <Label fx:id="costLabel" text="\$9,999" />
                                                          </children>
                                                          <HBox.margin>
                                                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -286,7 +286,7 @@
                               </AnchorPane>
                               <AnchorPane layoutX="10.0" layoutY="210.0" prefHeight="239.0" prefWidth="871.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <TextArea prefHeight="239.0" prefWidth="871.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TextArea fx:id="scheduleTextArea" prefHeight="239.0" prefWidth="871.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>
