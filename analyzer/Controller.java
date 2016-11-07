@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -50,7 +51,9 @@ public class Controller implements Initializable {
     public TableColumn<Debt , Double> debtInterestColumn;
     public TableColumn<Debt , Double> debtPaymentColumn;
 
+    public Label minPaymentLabel;
     public TextField monthlyPaydownTextField;
+    public Label monthlyBudgetLabel;
     public Button calculateButton;
 
     public Label payoffDateLabel;
@@ -70,7 +73,7 @@ public class Controller implements Initializable {
         debtAmountColumn.setCellValueFactory(new PropertyValueFactory<>("initialAmount"));
         debtInterestColumn.setCellValueFactory(new PropertyValueFactory<>("annualPercentageRate"));
         debtPaymentColumn.setCellValueFactory(new PropertyValueFactory<>("minPayment"));
-        //updateDebtTable();
+        //updateDebtTab();
     }
 
     /**
@@ -89,30 +92,45 @@ public class Controller implements Initializable {
             debtInterestTextField.clear();
             debtPaymentTextField.clear();
             analyzer.createNewDebt(name,amount,interest,payment);
-            updateDebtTable();
+            updateGUI();
         }
     }
 
     public void removeSelectedDebtItemClicked(){
         int removeIndex = debtTable.getSelectionModel().getSelectedIndex();
         analyzer.removeDebt(removeIndex);
-        updateDebtTable();
+        updateGUI();
     }
 
     public void calculateButtonClicked(){
         Double paydownBudget = validateDouble(monthlyPaydownTextField.getText(),"The Monthly Paydown Budget Amount is invalid.");
-        if(paydownBudget > 0.0){
+        if(paydownBudget >= 0.0){
             analyzer.getCurrentSchedule().setMonthlyPayDownAmount(paydownBudget);
         }
         analyzer.getCurrentSchedule().calculateSchedule();
-        scheduleTextArea.setText(analyzer.getCurrentSchedule().getScheduleDetails());
+       updateGUI();
     }
 
     /**
      * Controller methods
      */
+    private void updateGUI(){
+        updateScheduleTab();
+        updateDebtTab();
+    }
 
-    public void updateDebtTable(){
+    private void updateScheduleTab() {
+        if (analyzer.getCurrentSchedule() != null){
+            payoffDateLabel.setText(analyzer.getCurrentSchedule().getPayoffDate().format(DateTimeFormatter.ofPattern("MMM - yy")));
+            interestLabel.setText(String.format("$%.2f", analyzer.getCurrentSchedule().getTotalScheduleInterest()));
+            costLabel.setText(String.format("$%.2f", analyzer.getCurrentSchedule().getTotalScheduleCost()));
+            scheduleTextArea.setText(analyzer.getCurrentSchedule().getScheduleDetails());
+            minPaymentLabel.setText(String.format("$%.2f" , analyzer.getCurrentSchedule().getMonthlyMinPayment()));
+            monthlyBudgetLabel.setText(String.format("$%.2f", analyzer.getCurrentSchedule().getMonthlyPayoffBudget()));
+        }
+    }
+
+    private void updateDebtTab(){
         ObservableList<Debt> currentDebts = FXCollections.observableArrayList();
         if(analyzer.getDebts().size() > 0) {
             currentDebts.addAll(analyzer.getDebts());

@@ -79,6 +79,14 @@ public class PayoffSchedule {
         return budget;
     }
 
+    public double getMonthlyMinPayment() {
+        double budget = 0.0;
+        for (ScheduledDebt debt: this.debtList) {
+            budget += debt.getMinPayment();
+        }
+        return budget;
+    }
+
     public LinkedList<ScheduledDebt> getDebtList() {
         return debtList;
     }
@@ -219,6 +227,8 @@ public class PayoffSchedule {
         this.scheduleInvoices.clear();
         for(Debt debt : getDebtList()){
             debt.setAmount(debt.getInitialAmount());
+            debt.setCost(0.0);
+            debt.setIntrestIncurred(0.0);
         }
     }
 
@@ -319,6 +329,22 @@ public class PayoffSchedule {
             System.out.println(date.toString());
             System.out.println(this.scheduleInvoices.get(date));
         }
+    }
+
+    public double getTotalScheduleInterest(){
+        double interest = 0.0;
+        for( ScheduledDebt debt : this.getDebtList()){
+            interest += debt.getIntrestIncurred();
+        }
+        return interest;
+    }
+
+    public  double getTotalScheduleCost(){
+        double cost = 0.0;
+        for (ScheduledDebt debt : this.getDebtList()){
+            cost += debt.getCost();
+        }
+        return cost;
     }
 
 }

@@ -32,6 +32,7 @@ public class Debt {
     private double averageDailyBalance;
     private double minPayment;
     private double intrestIncurred;
+    private double cost;
     private double invoiceInterest;
     private double invoidePayment;
 
@@ -114,6 +115,14 @@ public class Debt {
         this.intrestIncurred = intrestIncurred;
     }
 
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
     public LocalDate getPayoffDate() {
         return payoffDate;
     }
@@ -156,6 +165,7 @@ public class Debt {
     public void makePayment(double paymentAmount){
         setAmount(getAmount() - paymentAmount);
         setInvoidePayment(getInvoidePayment()+paymentAmount);
+        setCost(getCost() + paymentAmount);
     }
 
     public void compoundInterest(int days){
