@@ -44,36 +44,36 @@ public class Controller implements Initializable {
 
     @FXML private VBox baseVBox;
 
-    public MenuItem closeFileMenuItem;
-    public MenuItem resetFileMenuItem;
-    public MenuItem helpMenuItem;
-    public MenuItem aboutMenuItem;
+    @FXML private MenuItem closeFileMenuItem;
+    @FXML private MenuItem resetFileMenuItem;
+    @FXML private MenuItem helpMenuItem;
+    @FXML private MenuItem aboutMenuItem;
 
-    public Button debtAddButton;
+    @FXML private Button debtAddButton;
 
-    public TextField debtNameTextField;
-    public TextField debtBalanceTextField;
-    public TextField debtInterestTextField;
-    public TextField debtPaymentTextField;
+    @FXML private TextField debtNameTextField;
+    @FXML private TextField debtBalanceTextField;
+    @FXML private TextField debtInterestTextField;
+    @FXML private TextField debtPaymentTextField;
 
 
 
-    public TableView<Debt> debtTable;
-    public TableColumn<Debt , String> debtNameColumn;
-    public TableColumn<Debt , Double> debtAmountColumn;
-    public TableColumn<Debt , Double> debtInterestColumn;
-    public TableColumn<Debt , Double> debtPaymentColumn;
+    @FXML private TableView<Debt> debtTable;
+    @FXML private TableColumn<Debt , String> debtNameColumn;
+    @FXML private TableColumn<Debt , Double> debtAmountColumn;
+    @FXML private TableColumn<Debt , Double> debtInterestColumn;
+    @FXML private TableColumn<Debt , Double> debtPaymentColumn;
 
-    public Label minPaymentLabel;
-    public TextField monthlyPaydownTextField;
-    public Label monthlyBudgetLabel;
-    public Button calculateButton;
+    @FXML private Label minPaymentLabel;
+    @FXML private TextField monthlyPaydownTextField;
+    @FXML private Label monthlyBudgetLabel;
+    @FXML private Button calculateButton;
 
-    public Label payoffDateLabel;
-    public Label interestLabel;
-    public Label costLabel;
+    @FXML private Label payoffDateLabel;
+    @FXML private Label interestLabel;
+    @FXML private Label costLabel;
 
-    public TextArea scheduleTextArea;
+    @FXML private TextArea scheduleTextArea;
 
 
 
@@ -99,7 +99,8 @@ public class Controller implements Initializable {
     /**
      * event handler methods
      */
-    public void addDebtItemClicked(){
+    @FXML
+    private void addDebtItemClicked(){
 
         String name = debtNameTextField.getText();
         double amount = validateDouble(debtBalanceTextField.getText(),"Balance must be a valid number");
@@ -116,12 +117,14 @@ public class Controller implements Initializable {
         }
     }
 
-    public void removeSelectedDebtItemClicked(){
+    @FXML
+    private void removeSelectedDebtItemClicked(){
         analyzer.removeDebt(debtTable.getSelectionModel().getSelectedItem());
         updateGUI();
     }
 
-    public void calculateButtonClicked(){
+    @FXML
+    private void calculateButtonClicked(){
         Double paydownBudget = validateDouble(monthlyPaydownTextField.getText(),"The Monthly Paydown Budget Amount is invalid.");
         if(paydownBudget >= 0.0){
             analyzer.getCurrentSchedule().setMonthlyPayDownAmount(paydownBudget);
@@ -130,12 +133,14 @@ public class Controller implements Initializable {
        updateGUI();
     }
 
-    public void sortDebts(){
+    @FXML
+    private void sortDebts(){
         analyzer.setDebts(debtTable.getItems());
         updateScheduleTab();
     }
 
-    public void resetMenuItemClicked(){
+    @FXML
+    private void resetMenuItemClicked(){
         analyzer.reset();
         monthlyPaydownTextField.clear();
         updateGUI();
@@ -179,11 +184,7 @@ public class Controller implements Initializable {
         debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> sortDebts());
     }
 
-    public void updateDebtListSequence(){
-        debtTable.getItems();
-    }
-
-    /**
+     /**
      *  Validator methods
      */
 
