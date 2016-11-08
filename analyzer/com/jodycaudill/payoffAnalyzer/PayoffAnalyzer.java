@@ -88,6 +88,11 @@ public class PayoffAnalyzer {
         updateAndSave();
     }
 
+    public void reset(){
+        currentSchedule = new PayoffSchedule();
+
+    }
+
 
 
     private void updateAndSave() {

@@ -7,9 +7,12 @@ import analyzer.com.jodycaudill.payoffAnalyzer.PayoffAnalyzer;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -39,6 +42,10 @@ public class Controller implements Initializable {
 
     public PayoffAnalyzer analyzer;
 
+    @FXML private VBox baseVBox;
+
+    public MenuItem closeFileMenuItem;
+    public MenuItem resetFileMenuItem;
     public MenuItem helpMenuItem;
     public MenuItem aboutMenuItem;
 
@@ -126,6 +133,18 @@ public class Controller implements Initializable {
     public void sortDebts(){
         analyzer.setDebts(debtTable.getItems());
         updateScheduleTab();
+    }
+
+    public void resetMenuItemClicked(){
+        analyzer.reset();
+        monthlyPaydownTextField.clear();
+        updateGUI();
+    }
+
+    @FXML
+    private void closeMenuItemClicked(){
+       Stage app = (Stage) baseVBox.getScene().getWindow();
+        app.close();
     }
 
     /**
