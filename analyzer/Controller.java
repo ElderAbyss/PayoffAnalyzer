@@ -1,6 +1,8 @@
 package analyzer;
 
+import analyzer.com.jodycaudill.payoffAnalyzer.AboutModal;
 import analyzer.com.jodycaudill.payoffAnalyzer.Debt;
+import analyzer.com.jodycaudill.payoffAnalyzer.HelpModal;
 import analyzer.com.jodycaudill.payoffAnalyzer.PayoffAnalyzer;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -36,6 +38,9 @@ public class Controller implements Initializable {
 
 
     public PayoffAnalyzer analyzer;
+
+    public MenuItem helpMenuItem;
+    public MenuItem aboutMenuItem;
 
     public Button debtAddButton;
 
@@ -74,6 +79,10 @@ public class Controller implements Initializable {
         debtAmountColumn.setCellValueFactory(new PropertyValueFactory<>("initialAmount"));
         debtInterestColumn.setCellValueFactory(new PropertyValueFactory<>("annualPercentageRate"));
         debtPaymentColumn.setCellValueFactory(new PropertyValueFactory<>("minPayment"));
+
+        helpMenuItem.setOnAction(e -> HelpModal.display());
+        aboutMenuItem.setOnAction(e -> AboutModal.display());
+
         //updateDebtTab();
        // debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> sortDebts());
 
@@ -154,6 +163,7 @@ public class Controller implements Initializable {
     public void updateDebtListSequence(){
         debtTable.getItems();
     }
+
     /**
      *  Validator methods
      */
