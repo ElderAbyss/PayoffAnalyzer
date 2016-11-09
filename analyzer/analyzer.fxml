@@ -183,8 +183,18 @@
                                                          <children>
                                                             <Label text="Payoff Schedule:" />
                                                             <TextField fx:id="scheduleNameTextField" promptText="Name Your Schedule" HBox.hgrow="ALWAYS" />
-                                                            <Label fx:id="errorLabel" />
-                                                            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                                            <Pane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="395.0" HBox.hgrow="ALWAYS">
+                                                               <children>
+                                                                  <Label fx:id="errorLabel">
+                                                                     <padding>
+                                                                        <Insets left="5.0" top="10.0" />
+                                                                     </padding>
+                                                                  </Label>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </Pane>
                                                             <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#savebuttonClicked" text="Save">
                                                                <HBox.margin>
                                                                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
