@@ -162,6 +162,7 @@ public class Controller implements Initializable {
             errorLabel.setText("");
             try{
                 analyzer.getCurrentSchedule().saveSchedule(scheduleNameTextField.getText());
+                InformationModal.display("Schedule Save Successful","You can locate your Payment Schedule file at","","<Application Directory>/Schedules/<Schedule Name>.txt","",350);
             } catch (IOException exp) {
                 exp.printStackTrace();
                 InformationModal.display("Application Error","An IO Error has occurred",exp.getMessage(),"Source","Schedule Saving",300);
