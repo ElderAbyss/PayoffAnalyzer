@@ -1,6 +1,11 @@
 package analyzer.com.jodycaudill.payoffAnalyzer;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -189,9 +194,46 @@ public class PayoffSchedule {
 
     }
 
-    public void saveSchedule() {
-        System.out.println("PayoffSchedule.saveSchedule() is not built yet");
-        //// TODO: 11/6/2016
+    public void saveSchedule(String filename) throws SecurityException, IOException{
+        String file = filename;
+        file = "Schedules/".concat(file).concat(".txt");
+        File saveFile = new File("Schedules/");
+
+        if(!saveFile.exists()){
+                saveFile.mkdir();
+        }
+        saveFile = new File(file);
+        if (!saveFile.exists()) {
+            saveFile.createNewFile();
+        }
+        FileWriter writer = new FileWriter(saveFile);
+        BufferedWriter buffer = new BufferedWriter(writer);
+        buffer.write(this.getScheduleSaveText(filename));
+        buffer.close();
+    }
+
+    private String getScheduleSaveText(String name) {
+        String marker = "************************************************************\n";
+        StringBuilder report = new StringBuilder();
+        report.append(name);
+        report.append("\n\n");
+        report.append("Debts on Schedule:\n");
+        for(Debt debt: this.getDebtList()){
+            report.append(debt.toString());
+            report.append("\n");
+        }
+        report.append("\n\n");
+        report.append(String.format("Minimum Payment Total:      $%.2f\t\t\tPaid Date:                  %s\n", this.getMonthlyMinPayment(), this.getPayoffDate().format(DateTimeFormatter.ofPattern("MMM - yy"))));
+        report.append(String.format("Additional Paydown Budget:  $%.2f\t\t\tInterest Paid:              $%.2f\n", this.getMonthlyPayDownAmount(),this.getTotalScheduleInterest()));
+        report.append(String.format("Monthly Budget:             $%.2f\t\t\tCost:                       $%.2f", this.getMonthlyPayoffBudget(),this.getTotalCost()));
+        report.append("\n\n");
+        report.append("\n\n");
+        report.append(marker);
+        report.append(marker);
+        report.append(this.getScheduleDetails());
+        report.append(marker);
+        report.append(marker);
+        return report.toString();
     }
 
     public void loadSchedule() {

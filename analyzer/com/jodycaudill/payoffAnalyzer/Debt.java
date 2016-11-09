@@ -224,4 +224,8 @@ public class Debt {
         return invoice;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s with an initial amount of $%.2f and APR of %.1f%%\n", name, initialAmount, annualPercentageRate);
+    }
 }

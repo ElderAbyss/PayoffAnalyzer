@@ -1,9 +1,6 @@
 package analyzer;
 
-import analyzer.com.jodycaudill.payoffAnalyzer.AboutModal;
-import analyzer.com.jodycaudill.payoffAnalyzer.Debt;
-import analyzer.com.jodycaudill.payoffAnalyzer.HelpModal;
-import analyzer.com.jodycaudill.payoffAnalyzer.PayoffAnalyzer;
+import analyzer.com.jodycaudill.payoffAnalyzer.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -14,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -63,6 +61,10 @@ public class Controller implements Initializable {
     @FXML private TableColumn<Debt , Double> debtAmountColumn;
     @FXML private TableColumn<Debt , Double> debtInterestColumn;
     @FXML private TableColumn<Debt , Double> debtPaymentColumn;
+
+    @FXML private TextField scheduleNameTextField;
+    @FXML private Label errorLabel;
+    @FXML private Button saveButton;
 
     @FXML private Label minPaymentLabel;
     @FXML private TextField monthlyPaydownTextField;
@@ -152,6 +154,24 @@ public class Controller implements Initializable {
         app.close();
     }
 
+    @FXML
+    private void savebuttonClicked(){
+        if(scheduleNameTextField.getText().isEmpty()){
+            errorLabel.setText("Invalid Schedule Name");
+        }else{
+            errorLabel.setText("");
+            try{
+                analyzer.getCurrentSchedule().saveSchedule(scheduleNameTextField.getText());
+            } catch (IOException exp) {
+                exp.printStackTrace();
+                InformationModal.display("Application Error","An IO Error has occurred",exp.getMessage(),"Source","Schedule Saving",300);
+            }catch (SecurityException sexp){
+                sexp.printStackTrace();
+                InformationModal.display("Application Error","A Permissions Error has occurred",sexp.getMessage(),"Source","Schedule Saving",300);
+            }
+        }
+    }
+
     /**
      * Controller methods
      */
@@ -183,6 +203,8 @@ public class Controller implements Initializable {
         }
         debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> sortDebts());
     }
+
+
 
      /**
      *  Validator methods
