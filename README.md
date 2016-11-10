@@ -64,7 +64,9 @@ java -jar
  - build Java fx CSS for the applicaiton
  - build a GUI component to show the minimum payment schedule for comparison.
  - Edit Debts in Table
+ 
 ***
+
 ## License
 
 MIT
