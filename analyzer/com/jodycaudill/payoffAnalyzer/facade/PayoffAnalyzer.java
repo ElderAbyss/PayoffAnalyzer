@@ -1,5 +1,7 @@
-package analyzer.com.jodycaudill.payoffAnalyzer;
+package analyzer.com.jodycaudill.payoffAnalyzer.facade;
 
+import analyzer.com.jodycaudill.payoffAnalyzer.models.Debt;
+import analyzer.com.jodycaudill.payoffAnalyzer.models.PayoffSchedule;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package analyzer.com.jodycaudill.payoffAnalyzer;
+package analyzer.com.jodycaudill.payoffAnalyzer.models;
 
 import java.time.LocalDate;
 
@@ -211,17 +211,18 @@ public class Debt {
      * @return
      */
     public String getinvoice(){
-        String invoice = "";
+        StringBuilder invoice = new StringBuilder();
         if(this.getAmount() > 0.0 || this.getInvoidePayment() > 0.0){
-            invoice = String.format("Account %s :: Interest incurred = $%.2f    A payment of $%.2f was made leaving a balance of %.2f %n",
-                    this.getName(), this.getInvoiceInterest(), this.getInvoidePayment(), this.getAmount());
+            invoice.append(String.format("Account %s :: Interest incurred = $%.2f    A payment of $%.2f was made leaving a balance of %.2f ",
+                    this.getName(), this.getInvoiceInterest(), this.getInvoidePayment(), this.getAmount()));
             if(this.getAmount() <= 0.0){
-               invoice = invoice.concat(this.getName() + " has been PAID IN FULL...\n");
+               invoice.append("... PAID IN FULL ...");
             }
             this.setInvoidePayment(0.0);
             this.setInvoiceInterest(0.0);
         }
-        return invoice;
+        invoice.append("\n");
+        return invoice.toString();
     }
 
     @Override

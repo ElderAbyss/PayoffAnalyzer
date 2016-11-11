@@ -49,11 +49,14 @@ The application will be built in Java and targeted to be deployed as a desktop a
 ![alt text](https://github.com/ElderAbyss/PayoffAnalyzer/raw/master/images/UI%20flow%20-%20Payoff%20Screen.png "Schedule Screen")
 ## Installation
 Build the project artifact to produce an executable java jar file for the program. 
+
+*The demo executed jar can be found in the Demo folder of this project
+
 ***
 ## Execution
-The appliaiton is currently built as an executable Java jar file and can be executed with the following command:
+The appliaiton is currently built as an executable Java jar file and can be executed by doulbe clicking the jar if, if you have JAVA_HOME defined, or with the following command in the directory of the jar:
 ```sh
-java -jar 
+java -jar payoff_analyzer.jar
 ```
 ***
 ### Development
@@ -61,15 +64,21 @@ java -jar
 ***
 ### Todos
 
- - build Java fx CSS for the applicaiton
  - build a GUI component to show the minimum payment schedule for comparison.
  - Edit Debts in Table
+
  
 ***
 
-## License
+## MIT License
+Copyright (c) 2016 Jody Caudill 
 
-MIT
-
-**Free Software**
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ associated documentation files (the “Software”), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the
+ following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ 
 ***

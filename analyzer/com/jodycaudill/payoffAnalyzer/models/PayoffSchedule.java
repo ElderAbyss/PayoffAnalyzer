@@ -1,4 +1,4 @@
-package analyzer.com.jodycaudill.payoffAnalyzer;
+package analyzer.com.jodycaudill.payoffAnalyzer.models;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -255,7 +255,6 @@ public class PayoffSchedule {
             payBudgetBalanceOnHighestPriorityUnpaidDebt(thisMonthsBudget);
             ageSchedule();
         }
-        //printSchedule();        //// TODO: 11/6/2016  remove this or comment out.. for debugging only
     }
 
     /**

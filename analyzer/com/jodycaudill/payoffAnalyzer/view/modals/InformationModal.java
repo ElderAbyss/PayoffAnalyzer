@@ -1,4 +1,4 @@
-package analyzer.com.jodycaudill.payoffAnalyzer;
+package analyzer.com.jodycaudill.payoffAnalyzer.view.modals;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
