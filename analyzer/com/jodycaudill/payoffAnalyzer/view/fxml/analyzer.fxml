@@ -191,7 +191,7 @@
                                                             <TextField fx:id="scheduleNameTextField" minWidth="-Infinity" prefWidth="300.0" promptText="Name Your Schedule" HBox.hgrow="ALWAYS" />
                                                             <Pane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" HBox.hgrow="ALWAYS">
                                                                <children>
-                                                                  <Label fx:id="errorLabel">
+                                                                  <Label fx:id="errorLabel" styleClass="label-errorLabel">
                                                                      <padding>
                                                                         <Insets left="5.0" top="10.0" />
                                                                      </padding>

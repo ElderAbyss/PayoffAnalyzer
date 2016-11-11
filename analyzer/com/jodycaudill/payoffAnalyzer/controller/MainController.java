@@ -109,17 +109,32 @@ public class MainController implements Initializable {
     private void addDebtItemClicked(){
 
         String name = debtNameTextField.getText();
-        double amount = validateDouble(debtBalanceTextField.getText(),"Balance must be a valid number");
-        double interest = validateDouble(debtInterestTextField.getText(),"Interest must be a valid percentage");
-        double payment = validateDouble(debtPaymentTextField.getText(),"Minimum Payment must be a valid number");
+        double amount = validateDouble(debtBalanceTextField.getText());
+        double interest = validateDouble(debtInterestTextField.getText());
+        double payment = validateDouble(debtPaymentTextField.getText());
 
-        if((amount > 0.0) && (interest > 0.0) && (payment > 0.0)){
+        if(!name.isEmpty() && (amount > 0.0) && (interest > 0.0) && (payment > 0.0)){
             debtNameTextField.clear();
             debtBalanceTextField.clear();
             debtInterestTextField.clear();
             debtPaymentTextField.clear();
             analyzer.createNewDebt(name,amount,interest,payment);
             updateGUI();
+        }else{
+            StringBuilder message = new StringBuilder();
+            if(name.isEmpty()){
+                message.append("Account must have a valid name\n");
+            }
+            if(amount < 0.0){
+                message.append("Balance must be a valid number\n");
+            }
+            if(interest < 0.0){
+                message.append("Interest must be a valid percentage\n");
+            }
+            if(payment < 0.0){
+                message.append("Minimum Payment must be a valid number\n");
+            }
+            InformationModal.display("Input Error","You have entered an Invalid number",message.toString(),"","",300);
         }
     }
 
@@ -131,9 +146,11 @@ public class MainController implements Initializable {
 
     @FXML
     private void calculateButtonClicked(){
-        Double paydownBudget = validateDouble(monthlyPaydownTextField.getText(),"The Monthly Paydown Budget Amount is invalid.");
+        Double paydownBudget = validateDouble(monthlyPaydownTextField.getText());
         if(paydownBudget >= 0.0){
             analyzer.getCurrentSchedule().setMonthlyPayDownAmount(paydownBudget);
+        }else{
+            InformationModal.display("Input Error","You have entered an Invalid number","The Monthly Paydown Budget Amount is invalid.","","",300);
         }
         analyzer.getCurrentSchedule().calculateSchedule();
        updateGUI();
@@ -215,13 +232,19 @@ public class MainController implements Initializable {
      *  Validator methods
      */
 
-    private double validateDouble(String valueString, String message) {
-        valueString = valueString.replaceFirst("$|%", "");
-        double value = -1.0;
+    /**
+     * Used to validate debt account financial metrics, negative numbers are unacceptable doubles for this purpose
+     * validate Double input String data
+     * @param valueString  String to parse into double
+     * @return double value of the String, -1 if parse failed
+     */
+    private double validateDouble(String valueString ) {
+        valueString = valueString.replaceAll("[$,%]", "");
+        double value;
         try {
             value = Double.parseDouble(valueString);
         }catch (NumberFormatException exp){
-            //// TODO: 11/6/2016  throw modal with passed in message.
+            value = -1.0;       //marker failure
         }
         return value;
     }

@@ -89,3 +89,9 @@
     -fx-background-color: #BDBDBD;
 }
 
+.label-errorLabel{
+    -fx-text-fill: yellow;
+    -fx-font-weight: bold;
+
+}
+
