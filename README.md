@@ -49,11 +49,14 @@ The application will be built in Java and targeted to be deployed as a desktop a
 ![alt text](https://github.com/ElderAbyss/PayoffAnalyzer/raw/master/images/UI%20flow%20-%20Payoff%20Screen.png "Schedule Screen")
 ## Installation
 Build the project artifact to produce an executable java jar file for the program. 
+
+*The demo executed jar can be found in the Demo folder of this project
+
 ***
 ## Execution
-The appliaiton is currently built as an executable Java jar file and can be executed with the following command:
+The appliaiton is currently built as an executable Java jar file and can be executed by doulbe clicking the jar if, if you have JAVA_HOME defined, or with the following command in the directory of the jar:
 ```sh
-java -jar 
+java -jar payoff_analyzer.jar
 ```
 ***
 ### Development
