@@ -1,6 +1,6 @@
 package analyzer.com.jodycaudill.payoffAnalyzer.test;
 
-import analyzer.com.jodycaudill.payoffAnalyzer.Debt;
+import analyzer.com.jodycaudill.payoffAnalyzer.models.Debt;
 import org.junit.Assert;
 import org.junit.Test;
 

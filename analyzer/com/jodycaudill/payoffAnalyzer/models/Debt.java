@@ -1,4 +1,4 @@
-package analyzer.com.jodycaudill.payoffAnalyzer;
+package analyzer.com.jodycaudill.payoffAnalyzer.models;
 
 import java.time.LocalDate;
 

@@ -1,6 +1,10 @@
-package analyzer;
+package analyzer.com.jodycaudill.payoffAnalyzer.controller;
 
-import analyzer.com.jodycaudill.payoffAnalyzer.*;
+import analyzer.com.jodycaudill.payoffAnalyzer.models.Debt;
+import analyzer.com.jodycaudill.payoffAnalyzer.facade.PayoffAnalyzer;
+import analyzer.com.jodycaudill.payoffAnalyzer.view.modals.AboutModal;
+import analyzer.com.jodycaudill.payoffAnalyzer.view.modals.HelpModal;
+import analyzer.com.jodycaudill.payoffAnalyzer.view.modals.InformationModal;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -35,10 +39,10 @@ import java.util.ResourceBundle;
 * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * */
 
-public class Controller implements Initializable {
+public class MainController implements Initializable {
 
 
-    public PayoffAnalyzer analyzer;
+    private PayoffAnalyzer analyzer;
 
     @FXML private VBox baseVBox;
 
@@ -174,7 +178,7 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Controller methods
+     * MainController methods
      */
     private void updateGUI(){
         updateScheduleTab();

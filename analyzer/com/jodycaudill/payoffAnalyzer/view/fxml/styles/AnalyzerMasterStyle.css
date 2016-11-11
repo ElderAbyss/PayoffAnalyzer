@@ -1,0 +1,91 @@
+.root{
+    -fx-background-color: #FF5722;
+}
+
+.vbox-base{
+    -fx-background-color: #FF5722;
+}
+
+.hbox-header{
+    -fx-background-color: #E64A19;
+}
+
+.hbox-container{
+    -fx-background-color: #FFFFFF;
+}
+
+
+.label{
+    -fx-font-size: 12px;
+}
+
+.label-inputTag{
+    -fx-font-weight: bold;
+
+}
+
+.label-sectionLable{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+
+}
+
+.label-headerLabel{
+    -fx-font-size: 24px;
+    -fx-text-fill: #FFFFFF ;
+}
+
+.hyperlink{
+
+    -fx-text-fill: #212121;
+    -fx-font-size: 14px;
+    -fx-font-style: italic;
+    -fx-font-weight: 400;
+}
+
+.button{
+    -fx-background-color: #4CAF50;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 6px;
+}
+.tab-pane .tab-header-background{
+    -fx-background-color: #E64A19;
+
+}
+
+.tab:selected {
+    -fx-background-color: #FF5722;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #FF5722;
+}
+
+.tab:selected .tab-label{
+    -fx-text-fill: #FFFFFF;
+}
+
+.tab-pane *.tab-header-area{
+    -fx-font-size: 16px;
+    -fx-padding: 0px 0px 0px 0px;
+}
+.tab {
+    -fx-background-color: #E64A19;
+    -fx-padding: 1.7em 0.75em 1.7em 1.3em;
+    -fx-border-color: #212121;
+    -fx-rotate: 90;
+    -fx-border-insets: 0 0 0 10;
+    -fx-border-radius: 6px;
+}
+
+.backgroundPane{
+    -fx-background-color: #FF5722;
+}
+
+.table-view{
+    -fx-background-color: #BDBDBD;
+}
+
