@@ -1,7 +1,7 @@
 package analyzer.com.jodycaudill.payoffAnalyzer.controller;
 
-import analyzer.com.jodycaudill.payoffAnalyzer.models.Debt;
 import analyzer.com.jodycaudill.payoffAnalyzer.facade.PayoffAnalyzer;
+import analyzer.com.jodycaudill.payoffAnalyzer.models.Debt;
 import analyzer.com.jodycaudill.payoffAnalyzer.view.modals.AboutModal;
 import analyzer.com.jodycaudill.payoffAnalyzer.view.modals.HelpModal;
 import analyzer.com.jodycaudill.payoffAnalyzer.view.modals.InformationModal;
@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -89,15 +90,24 @@ public class MainController implements Initializable {
         analyzer = new PayoffAnalyzer();
 
         debtNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        debtNameColumn.setCellFactory(TextFieldTableCell.<Debt>forTableColumn());
+
+
         debtAmountColumn.setCellValueFactory(new PropertyValueFactory<>("initialAmount"));
+        debtAmountColumn.setCellFactory(TextFieldTableCell.<Debt,Double>forTableColumn(new AnalyzerDoubleStringConverter ()));
+
         debtInterestColumn.setCellValueFactory(new PropertyValueFactory<>("annualPercentageRate"));
+        debtInterestColumn.setCellFactory(TextFieldTableCell.<Debt,Double>forTableColumn(new AnalyzerDoubleStringConverter ()));
+
+
         debtPaymentColumn.setCellValueFactory(new PropertyValueFactory<>("minPayment"));
+        debtPaymentColumn.setCellFactory(TextFieldTableCell.<Debt,Double>forTableColumn(new AnalyzerDoubleStringConverter ()));
 
         helpMenuItem.setOnAction(e -> HelpModal.display());
         aboutMenuItem.setOnAction(e -> AboutModal.display());
 
         //updateDebtTab();
-       // debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> sortDebts());
+       // debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> updateDebts());
 
 
     }
@@ -126,7 +136,7 @@ public class MainController implements Initializable {
                 message.append("Account must have a valid name\n");
             }
             if(amount < 0.0){
-                message.append("Balance must be a valid number\n");
+                message.append("Amount must be a valid number\n");
             }
             if(interest < 0.0){
                 message.append("Interest must be a valid percentage\n");
@@ -157,7 +167,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void sortDebts(){
+    private void updateDebts(){
         analyzer.setDebts(debtTable.getItems());
         updateScheduleTab();
     }
@@ -195,6 +205,67 @@ public class MainController implements Initializable {
     }
 
     /**
+     * tableview edit methods
+     */
+
+    @FXML
+    private void editNameColumn(TableColumn.CellEditEvent<Debt, String> editEvent)  {
+        Debt updatedDebt = editEvent.getTableView().getItems().get(
+                editEvent.getTablePosition().getRow());
+        if(!editEvent.getNewValue().isEmpty()){
+            updatedDebt.setName(editEvent.getNewValue());
+            updateDebts();
+        }else{
+            //updatedDebt.setName(editEvent.getOldValue());
+            InformationModal.display("Input Error","Account must have a valid name\n","","","",300);
+            editEvent.getTableView().refresh();
+        }
+    }
+
+    @FXML
+    private void editAmountColumn(TableColumn.CellEditEvent<Debt, Double> editEvent)  {
+        Debt updatedDebt = editEvent.getTableView().getItems().get(
+                editEvent.getTablePosition().getRow());
+        double newAmount = editEvent.getNewValue();
+        if( newAmount >= 0.0 ){
+            updatedDebt.setInitialAmount(newAmount);
+            updateDebts();
+        }else{
+            InformationModal.display("Input Error","Amount must be a valid number\n","","","",300);
+            editEvent.getTableView().refresh();
+        }
+    }
+
+    @FXML
+    private void editInterestColumn(TableColumn.CellEditEvent<Debt, Double> editEvent)  {
+        Debt updatedDebt = editEvent.getTableView().getItems().get(
+                editEvent.getTablePosition().getRow());
+        double newAmount = editEvent.getNewValue();
+        if( newAmount >= 0.0 ){
+            updatedDebt.setAnnualPercentageRate(newAmount);
+            updateDebts();
+        }else{
+            InformationModal.display("Input Error","Interest must be a valid percentage\n","","","",300);
+            editEvent.getTableView().refresh();
+        }
+    }
+
+    @FXML
+    private void editPaymentColumn(TableColumn.CellEditEvent<Debt, Double> editEvent)  {
+        Debt updatedDebt = editEvent.getTableView().getItems().get(
+                editEvent.getTablePosition().getRow());
+        double newAmount = editEvent.getNewValue();
+        if( newAmount >= 0.0 ){
+            updatedDebt.setMinPayment(newAmount);
+            updateDebts();
+        }else{
+            //updatedDebt.setName(editEvent.getOldValue());
+            InformationModal.display("Input Error","Minimum Payment must be a valid number\n","","","",300);
+            editEvent.getTableView().refresh();
+        }
+    }
+
+    /**
      * MainController methods
      */
     private void updateGUI(){
@@ -223,7 +294,7 @@ public class MainController implements Initializable {
         }else{
             debtTable.getItems().clear();
         }
-        debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> sortDebts());
+        debtTable.getItems().addListener((ListChangeListener<? super Debt>)(event )-> updateDebts());
     }
 
 
@@ -249,4 +320,8 @@ public class MainController implements Initializable {
         return value;
     }
 
+    private double validateDouble(Double value ) {
+        value = value >= 0.0 ? value : -1.0;
+        return value;
+    }
 }

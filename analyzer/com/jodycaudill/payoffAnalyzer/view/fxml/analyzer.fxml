@@ -60,7 +60,7 @@
                                           <VBox HBox.hgrow="ALWAYS">
                                              <children>
                                                 <Label styleClass="label-sectionLable" text="Debt Items" />
-                                                <Label layoutX="10.0" layoutY="10.0" text="These are the individual debt items you owe" />
+                                                <Label layoutX="10.0" layoutY="10.0" text="These are the individual debt items you owe" wrapText="true" />
                                              </children>
                                           </VBox>
                                           <GridPane alignment="TOP_CENTER" hgap="4.0" styleClass="hbox-container" vgap="25.0">
@@ -89,7 +89,7 @@
                                                       <Insets right="8.0" />
                                                    </GridPane.margin>
                                                 </Label>
-                                                <Label layoutX="75.0" layoutY="12.0" styleClass="label-inputTag" text="Balance:" GridPane.rowIndex="1">
+                                                <Label layoutX="75.0" layoutY="12.0" styleClass="label-inputTag" text="Amount:" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets right="8.0" />
                                                    </GridPane.margin>
@@ -146,12 +146,12 @@
                                       <content>
                                         <AnchorPane>
                                              <children>
-                                                <TableView fx:id="debtTable" prefHeight="400.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <TableView fx:id="debtTable" editable="true" prefHeight="400.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columns>
-                                                    <TableColumn fx:id="debtNameColumn" maxWidth="512.0" minWidth="80.0" prefWidth="406.0" text="Name" />
-                                                    <TableColumn fx:id="debtAmountColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="144.0" text="Amount" />
-                                                      <TableColumn fx:id="debtInterestColumn" maxWidth="1.7976931348623157E308" minWidth="3.0" prefWidth="88.0" text="APR" />
-                                                      <TableColumn fx:id="debtPaymentColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="140.0" text="Min. Payment" />
+                                                    <TableColumn fx:id="debtNameColumn" maxWidth="512.0" minWidth="80.0" onEditCommit="#editNameColumn" prefWidth="406.0" text="Name" />
+                                                    <TableColumn fx:id="debtAmountColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" onEditCommit="#editAmountColumn" prefWidth="144.0" text="Amount" />
+                                                      <TableColumn fx:id="debtInterestColumn" maxWidth="1.7976931348623157E308" minWidth="3.0" onEditCommit="#editInterestColumn" prefWidth="88.0" text="APR" />
+                                                      <TableColumn fx:id="debtPaymentColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" onEditCommit="#editPaymentColumn" prefWidth="140.0" text="Min. Payment" />
                                                   </columns>
                                                 </TableView>
                                              </children></AnchorPane>
