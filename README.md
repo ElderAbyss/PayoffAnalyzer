@@ -65,8 +65,6 @@ java -jar payoff_analyzer.jar
 ### Todos
 
  - build a GUI component to show the minimum payment schedule for comparison.
- - Edit Debts in Table
-
  
 ***
 
