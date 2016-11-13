@@ -213,7 +213,7 @@ public class Debt {
     public String getinvoice(){
         StringBuilder invoice = new StringBuilder();
         if(this.getAmount() > 0.0 || this.getInvoidePayment() > 0.0){
-            invoice.append(String.format("Account %s :: Interest incurred = $%.2f    A payment of $%.2f was made leaving a balance of %.2f ",
+            invoice.append(String.format("Account %s :: Interest incurred = $%.2f    A payment of $%.2f was made leaving a balance of $%.2f ",
                     this.getName(), this.getInvoiceInterest(), this.getInvoidePayment(), this.getAmount()));
             if(this.getAmount() <= 0.0){
                invoice.append("... PAID IN FULL ...");
