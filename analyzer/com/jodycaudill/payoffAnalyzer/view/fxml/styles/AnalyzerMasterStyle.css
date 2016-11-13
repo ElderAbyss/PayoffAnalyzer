@@ -97,5 +97,6 @@
 .label-errorLabel{
     -fx-text-fill: #FF5252;
     -fx-font-weight: bold;
+    -fx-font-style: italic;
 }
 
